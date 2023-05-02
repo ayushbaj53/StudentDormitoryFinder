@@ -148,7 +148,11 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please should be at least 6 digits", Toast.LENGTH_LONG).show();
                     editTextRegisterPwd.setError("Password too weak");
                     editTextRegisterPwd.requestFocus();
-                } else if (TextUtils.isEmpty(textConfirmPwd)) {
+                }else if (TextUtils.isEmpty(textConfirmPwd)) {
+                    Toast.makeText(RegisterActivity.this, "Please confirm your password", Toast.LENGTH_LONG).show();
+                    editTextRegisterConfirmPwd.setError("Password Confirmation is required");
+                    editTextRegisterConfirmPwd.requestFocus();
+                }else if (!textPwd.equals(textConfirmPwd)) {
                     Toast.makeText(RegisterActivity.this, "Please confirm your password", Toast.LENGTH_LONG).show();
                     editTextRegisterConfirmPwd.setError("Password Confirmation is required");
                     editTextRegisterConfirmPwd.requestFocus();

@@ -4,7 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -18,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -43,6 +50,16 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewMobile = findViewById(R.id.textView_show_mobile);
         progressBar = findViewById(R.id.progressBar);
 
+        //Set OnClickListener on ImageView to Open UploadProfilePicActivity
+        imageView = findViewById(R.id.imageView_profile_dp);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserProfileActivity.this, UploadProfilePicActivity.class);
+                startActivity(intent);
+            }
+        });
+
         authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
@@ -50,9 +67,41 @@ public class UserProfileActivity extends AppCompatActivity {
             Toast.makeText(UserProfileActivity.this, "Something went Wrong! User's details are not available at the moment",
                     Toast.LENGTH_LONG).show();
         } else {
+            checkifEmailVerified(firebaseUser);
             progressBar.setVisibility(View.VISIBLE);
             showUserProfile(firebaseUser);
         }
+    }
+
+    //Users coming to UserProfileActivity after successful registration
+    private void checkifEmailVerified(FirebaseUser firebaseUser) {
+        if (!firebaseUser.isEmailVerified()){
+            showAlertDialog();
+        }
+    }
+
+    private void showAlertDialog() {
+        //Setup Alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserProfileActivity.this);
+        builder.setTitle("Email Not Verified");
+        builder.setMessage("Please verify your email now. You can not login without email verification next time");
+
+        //Open Email Apps if User clicks/taps Continue button
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    //To email app in new window and not within our app
+                startActivity(intent);
+            }
+        });
+
+        //Create the AlertDialog
+        AlertDialog alertDialog = builder.create();
+
+        //Show the AlertDialog
+        alertDialog.show();
     }
 
     private void showUserProfile(FirebaseUser firebaseUser) {
@@ -77,6 +126,14 @@ public class UserProfileActivity extends AppCompatActivity {
                     textViewDoB.setText(doB);
                     textViewGender.setText(gender);
                     textViewMobile.setText(mobile);
+
+                    //Set User DP (After user has uploaded
+                    Uri uri = firebaseUser.getPhotoUrl();
+
+                    //ImageViewer setImageURI() should not be used with regular URIs. So we are using Picasso
+                    Picasso.with(UserProfileActivity.this).load(uri).into(imageView);
+                } else {
+                    Toast.makeText(UserProfileActivity.this, "Something went Wrong!", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
@@ -87,5 +144,53 @@ public class UserProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    //Creating ActionBar Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate menu items
+        getMenuInflater().inflate(R.menu.common_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //When any menu item is selected
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_refresh){
+            //Refresh Activity
+            startActivity(getIntent());
+            finish();
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.menu_update_profile){
+            Intent intent = new Intent(UserProfileActivity.this, UpdateProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_update_email) {
+            Intent intent = new Intent(UserProfileActivity.this, UpdateEmailActivity.class);
+            startActivity(intent);
+        } /*else if (id == R.id.menu_settings){
+            Toast.makeText(UserProfileActivity.this, "menu_settings", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_change_password) {
+            Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_delete_profile) {
+            Intent intent = new Intent(UserProfileActivity.this, DeleteProfileActivity.class);
+            startActivity(intent);
+        } */else if (id == R.id.menu_logout){
+            authProfile.signOut();
+            Toast.makeText(UserProfileActivity.this, "Logged Out", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+
+            //Clear Stack to prevent user coming back to UserProfileActivity on pressing back button after Logging Out
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();  //Close UserProfileActivity
+        } else {
+            Toast.makeText(UserProfileActivity.this, "Something went Wrong!", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
