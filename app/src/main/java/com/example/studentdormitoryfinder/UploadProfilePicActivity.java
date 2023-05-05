@@ -106,9 +106,9 @@ public class UploadProfilePicActivity extends AppCompatActivity {
             StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid() + "." + getFileExtension(uriImage));
 
             //Upload image to Storage
-            fileReference.putFile(uriImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                     fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
@@ -184,7 +184,7 @@ public class UploadProfilePicActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.menu_delete_profile) {
-            Intent intent = new Intent(UploadProfilePicActivity.this, DeleteProfileActivity.class);
+            Intent intent = new Intent(UploadProfilePicActivity .this, DeleteProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_logout){
             authProfile.signOut();
