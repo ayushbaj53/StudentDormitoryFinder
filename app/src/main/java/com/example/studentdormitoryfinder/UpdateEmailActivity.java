@@ -199,12 +199,13 @@ public class UpdateEmailActivity extends AppCompatActivity {
             Intent intent = new Intent(UpdateEmailActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
             finish();
-        } /*else if (id == R.id.menu_settings){
-            Toast.makeText(UserProfileActivity.this, "menu_settings", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_settings){
+            Toast.makeText(UpdateEmailActivity.this, "menu_settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.menu_change_password) {
-            Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
+            Intent intent = new Intent(UpdateEmailActivity.this, ChangePasswordActivity.class);
             startActivity(intent);
-        } else if (id == R.id.menu_delete_profile) {
+            finish();
+        }/* else if (id == R.id.menu_delete_profile) {
             Intent intent = new Intent(UserProfileActivity.this, DeleteProfileActivity.class);
             startActivity(intent);
         } */else if (id == R.id.menu_logout){

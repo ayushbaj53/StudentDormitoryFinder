@@ -34,7 +34,6 @@ public class UserProfileActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseAuth authProfile;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,10 +88,10 @@ public class UserProfileActivity extends AppCompatActivity {
         //Open Email Apps if User clicks/taps Continue button
         builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    //To email app in new window and not within our app
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    //To email app in new window and not within our app
                 startActivity(intent);
             }
         });
@@ -170,12 +169,12 @@ public class UserProfileActivity extends AppCompatActivity {
         } else if (id == R.id.menu_update_email) {
             Intent intent = new Intent(UserProfileActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
-        } /*else if (id == R.id.menu_settings){
+        } else if (id == R.id.menu_settings){
             Toast.makeText(UserProfileActivity.this, "menu_settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.menu_change_password) {
             Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
             startActivity(intent);
-        } else if (id == R.id.menu_delete_profile) {
+        } /*else if (id == R.id.menu_delete_profile) {
             Intent intent = new Intent(UserProfileActivity.this, DeleteProfileActivity.class);
             startActivity(intent);
         } */else if (id == R.id.menu_logout){
