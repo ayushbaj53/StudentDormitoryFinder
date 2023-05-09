@@ -68,6 +68,7 @@ public class UploadProfilePicActivity extends AppCompatActivity {
         buttonUploadPicChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 openFileChooser();
             }
         });
@@ -103,7 +104,8 @@ public class UploadProfilePicActivity extends AppCompatActivity {
     private void UploadPic() {
         if (uriImage != null) {
             //Save the image with uid of the currently logged user
-            StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid() + "." + getFileExtension(uriImage));
+            StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid() + "/displaypic."
+                    + getFileExtension(uriImage));
 
             //Upload image to Storage
             fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -117,7 +119,8 @@ public class UploadProfilePicActivity extends AppCompatActivity {
                             firebaseUser = authProfile.getCurrentUser();
 
                             //Finally set the display image of the user after upload
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setPhotoUri(downloadUri).build();
                             firebaseUser.updateProfile(profileUpdates);
 
                         }
