@@ -2,6 +2,7 @@ package com.example.studentdormitoryfinder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -186,7 +187,10 @@ public class UpdateEmailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_refresh){
+        if (id ==android.R.id.home){
+            NavUtils.navigateUpFromSameTask(UpdateEmailActivity.this);
+        }
+        else if (id == R.id.menu_refresh){
             //Refresh Activity
             startActivity(getIntent());
             finish();

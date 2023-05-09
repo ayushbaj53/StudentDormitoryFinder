@@ -2,6 +2,7 @@ package com.example.studentdormitoryfinder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -261,7 +262,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_refresh){
+        if (id ==android.R.id.home){
+            NavUtils.navigateUpFromSameTask(UpdateProfileActivity.this);
+        }
+        else if (id == R.id.menu_refresh){
             //Refresh Activity
             startActivity(getIntent());
             finish();

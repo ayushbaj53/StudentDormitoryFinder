@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         //Open Email Apps if User clicks/taps Continue button
         builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_APP_EMAIL);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    //To email app in new window and not within our app
