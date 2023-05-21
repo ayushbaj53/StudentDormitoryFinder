@@ -27,41 +27,28 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class HostelLoginForm extends AppCompatActivity {
     private EditText editTextLoginEmail, editTextLoginPwd;
     private ProgressBar progressBar;
     private FirebaseAuth authProfile;
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "HostelLoginForm";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_hostel_login_form);
+        getSupportActionBar().setTitle("HostelLogin");
 
-        getSupportActionBar().setTitle("Login");
-
-        editTextLoginEmail = findViewById(R.id.editText_login_email);
-        editTextLoginPwd = findViewById(R.id.editText_login_pwd);
+        editTextLoginEmail = findViewById(R.id.editText_login_email_hostel);
+        editTextLoginPwd = findViewById(R.id.editText_login_pwd_hostel);
         progressBar = findViewById(R.id.progressBar);
-
         authProfile = FirebaseAuth.getInstance();
-
-        Button buttonForgotPassword = findViewById(R.id.button_forgot_password);
-        buttonForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "You can reset your Password now!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
-            }
-        });
-
-        //Show Hide Password using Eye Icon
-        ImageView imageViewShowHidePwd = findViewById(R.id.imageView_show_hide_pwd);
+        ImageView imageViewShowHidePwd = findViewById(R.id.imageView_show_hide_pwd_hostel);
         imageViewShowHidePwd.setImageResource(R.drawable.ic_show_pwd);
         imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editTextLoginPwd.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                if (editTextLoginPwd.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
                     //If password is visible then Hide it
                     editTextLoginPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     //Change Icon
@@ -72,9 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //Login User
-        Button buttonLogin = findViewById(R.id.button_login);
+        Button buttonLogin = findViewById(R.id.button_login_hostel);
         buttonLogin.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,15 +67,15 @@ public class LoginActivity extends AppCompatActivity {
                 String textPwd = editTextLoginPwd.getText().toString();
 
                 if (TextUtils.isEmpty(textEmail)) {
-                    Toast.makeText(LoginActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HostelLoginForm.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                     editTextLoginEmail.setError("Email is required");
                     editTextLoginEmail.requestFocus();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
-                    Toast.makeText(LoginActivity.this, "Please re-enter your email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HostelLoginForm.this, "Please re-enter your email", Toast.LENGTH_SHORT).show();
                     editTextLoginEmail.setError("Valid Email is required");
                     editTextLoginEmail.requestFocus();
                 } else if (TextUtils.isEmpty(textPwd)) {
-                    Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HostelLoginForm.this, "Please enter your password", Toast.LENGTH_SHORT).show();
                     editTextLoginPwd.setError("Email is required");
                     editTextLoginPwd.requestFocus();
                 } else {
@@ -99,55 +84,53 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }));
-
-
     }
+        private void loginUser(String email, String pwd) {
+            authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(HostelLoginForm.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
 
-    private void loginUser(String email, String pwd) {
-        authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                        //Get instance of the current User
+                        FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
-                    //Get instance of the current User
-                    FirebaseUser firebaseUser = authProfile.getCurrentUser();
+                        //Check if email is verified before user can access their profile
+                        if (firebaseUser.isEmailVerified()){
+                            Toast.makeText(HostelLoginForm.this, "You are logged in now", Toast.LENGTH_SHORT).show();
 
-                    //Check if email is verified before user can access their profile
-                    if (firebaseUser.isEmailVerified()){
-                        Toast.makeText(LoginActivity.this, "You are logged in now", Toast.LENGTH_SHORT).show();
-
-                        //Open User Profile
-                        //Start the UserProfileActivity
-                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-                        finish();     //Close LoginActivity
+                            //Open User Profile
+                            //Start the UserProfileActivity
+                            startActivity(new Intent(HostelLoginForm.this, HostelUserProfileActivity.class));
+                            finish();     //Close LoginActivity
+                        } else {
+                            firebaseUser.sendEmailVerification();
+                            authProfile.signOut(); //Sign out user
+                            showAlertDialog();
+                        }
                     } else {
-                        firebaseUser.sendEmailVerification();
-                        authProfile.signOut(); //Sign out user
-                        showAlertDialog();
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidUserException e) {
+                            editTextLoginEmail.setError("User does not exists or is no longer valid. PLease register again.");
+                            editTextLoginEmail.requestFocus();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            editTextLoginEmail.setError("Invalid credentials. Kindly, check and re-enter.");
+                            editTextLoginEmail.requestFocus();
+                        } catch (Exception e) {
+                            Log.e(TAG, e.getMessage());
+                            Toast.makeText(HostelLoginForm.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(HostelLoginForm.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthInvalidUserException e) {
-                        editTextLoginEmail.setError("User does not exists or is no longer valid. PLease register again.");
-                        editTextLoginEmail.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        editTextLoginEmail.setError("Invalid credentials. Kindly, check and re-enter.");
-                        editTextLoginEmail.requestFocus();
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    Toast.makeText(LoginActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+            });
+
     }
 
     private void showAlertDialog() {
         //Setup Alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(HostelLoginForm.this);
         builder.setTitle("Email Not Verified");
         builder.setMessage("Please verify your email now. You can not login without email verification");
 
@@ -170,19 +153,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //Check if User is already logged in. In such case, straightaway take the User to the User's Profile
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (authProfile.getCurrentUser() != null) {
-            Toast.makeText(LoginActivity.this, "Already Logged In", Toast.LENGTH_SHORT).show();
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (authProfile.getCurrentUser() != null) {
+//            Toast.makeText(HostelLoginForm.this, "Already Logged In", Toast.LENGTH_SHORT).show();
+//
+//            //Start the HostelUserProfileActivity
+//            startActivity(new Intent(HostelLoginForm.this, HostelUserProfileActivity.class));
+//            finish();       //Close LoginActivity
+//        }
+//        else {
+//            Toast.makeText(HostelLoginForm.this, "You can Login now", Toast.LENGTH_SHORT).show();
+//
+//        }
+//    }
 
-            //Start the UserProfileActivity
-            startActivity(new Intent(LoginActivity.this, searchactivity.class));
-            finish();       //Close LoginActivity
-        }
-        else {
-            Toast.makeText(LoginActivity.this, "You can Login now", Toast.LENGTH_SHORT).show();
-
-        }
     }
-}

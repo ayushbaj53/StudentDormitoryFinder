@@ -8,32 +8,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class HostelRegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_hostel_register);
 
         //Set the Title
         getSupportActionBar().setTitle("Student Dormitory Finder");
 
         //Open Login Activity
-        Button buttonLogin = findViewById(R.id.button_login);
+        Button buttonLogin = findViewById(R.id.hostel_login);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(HostelRegisterActivity.this, HostelLoginForm.class);
                 startActivity(intent);
             }
         });
 
         //Open Register Activity
-        Button buttonRegister = findViewById(R.id.button_register);
+        Button buttonRegister = findViewById(R.id.hostel_register);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(HostelRegisterActivity.this, HostelRegisterForm.class);
                 startActivity(intent);
             }
         });
@@ -43,11 +43,9 @@ public class MainActivity extends AppCompatActivity {
         hostelregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HostelRegisterActivity.class);
+                Intent intent = new Intent(HostelRegisterActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
     }
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
-    android:background="@color/light_gray">
-    
+    tools:context=".HostelRegisterActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ImageView_logo"
             android:layout_marginTop="30dp"
-            android:text="Welcome to Student Dormitory FInder "
+            android:text="Welcome to Dormitory Registration "
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
             android:textSize="16sp" />
@@ -38,7 +37,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_login"
+            android:id="@+id/hostel_login"
             android:text="Login"
             android:layout_marginTop="100dp"
             android:layout_below="@+id/textview_main_head"
@@ -48,9 +47,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_register"
+            android:id="@+id/hostel_register"
             android:text="Register"
-            android:layout_below="@+id/button_login"
+            android:layout_below="@+id/hostel_login"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"/>
 
@@ -58,21 +57,13 @@
             android:id="@+id/textview_hostel_owner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button_register"
+            android:layout_below="@+id/hostel_register"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="230dp"
-            android:text="For Hostel Owner"
+            android:text="For Students"
             android:textSize="15sp"/>
 
 
     </RelativeLayout>
 
-
-
-
 </ScrollView>
-
-
-
-
-

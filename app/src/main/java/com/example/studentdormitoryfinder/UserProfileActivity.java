@@ -3,6 +3,7 @@ package com.example.studentdormitoryfinder;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
@@ -14,8 +15,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private TextView textViewWelcome, textViewFullName, textViewEmail, textViewDoB, textViewGender, textViewMobile;
     private ProgressBar progressBar;
+    RecyclerView recyclerView;
+
+//    MainAdapter mainAdapter;
+    private EditText searchbar;
     private String fullName, email, doB, gender, mobile;
     private ImageView imageView;
     private FirebaseAuth authProfile;
@@ -54,6 +61,9 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewGender = findViewById(R.id.textView_show_gender);
         textViewMobile = findViewById(R.id.textView_show_mobile);
         progressBar = findViewById(R.id.progressBar);
+        searchbar = findViewById(R.id.editView_show_search);
+
+
 
         //Set OnClickListener on ImageView to Open UploadProfilePicActivity
         imageView = findViewById(R.id.imageView_profile_dp);
