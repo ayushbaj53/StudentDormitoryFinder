@@ -266,8 +266,9 @@ public class DeleteProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(DeleteProfileActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.menu_settings){
-            Toast.makeText(DeleteProfileActivity.this, "menu_settings", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.menu_profile){
+            Intent intent = new Intent(DeleteProfileActivity.this, UserProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.menu_change_password) {
             Intent intent = new Intent(DeleteProfileActivity.this, ChangePasswordActivity.class);
             startActivity(intent);

@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         //Open User Profile
                         //Start the UserProfileActivity
-                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                        startActivity(new Intent(LoginActivity.this, searchactivity.class));
                         finish();     //Close LoginActivity
                     } else {
                         firebaseUser.sendEmailVerification();

@@ -13,26 +13,17 @@
         android:padding="15dp"
         android:background="@color/white">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ImageView_logo"
-            android:layout_marginTop="30dp"
-            app:srcCompat="@drawable/ic_logo"
-            android:maxWidth="180dp"
-            android:adjustViewBounds="true"
-            android:layout_centerHorizontal="true"/>
+
 
         <TextView
             android:id="@+id/textview_main_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ImageView_logo"
             android:layout_marginTop="30dp"
-            android:text="Welcome to Dormitory Registration "
+            android:text="Welcome to Dormitory Registration (For Hostel) "
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            android:textSize="16sp" />
+            android:textSize="30sp" />
 
         <Button
             android:layout_width="match_parent"

@@ -46,4 +46,6 @@ public class SearchItem {
     public void setprice(String price) {
         this.price = price;
     }
+
+
 }

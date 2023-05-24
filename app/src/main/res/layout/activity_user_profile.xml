@@ -20,32 +20,6 @@
         android:orientation="vertical">
 
 
-
-
-        <EditText
-            android:layout_width="385dp"
-            android:layout_height="70dp"
-            android:id="@+id/editView_show_search"
-            android:layout_alignStart="@+id/ic_email"
-            android:hint="     Enter Location to Search"
-            android:background="@color/white"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="500dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="18sp">
-
-        </EditText>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ic_search"
-            android:background="@drawable/ic_search"
-            android:layout_marginTop="-69dp"
-            android:layout_marginLeft="330dp">
-        </ImageView>
-
-
         <RelativeLayout
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
@@ -225,11 +199,6 @@
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
 
 
     </LinearLayout>
