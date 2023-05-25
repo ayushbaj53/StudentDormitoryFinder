@@ -215,7 +215,7 @@ public class HostelRegisterForm extends AppCompatActivity {
                                                     Toast.LENGTH_LONG).show();
 
                                             //Open User Profile after successful registration
-                                            Intent intent = new Intent(HostelRegisterForm.this, UserProfileActivity.class);
+                                            Intent intent = new Intent(HostelRegisterForm.this, HostelUserProfileActivity.class);
                                             // To prevent User from returning back to Register Activity on pressing back button after registration
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);

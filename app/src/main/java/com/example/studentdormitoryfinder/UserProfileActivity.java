@@ -87,6 +87,13 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    //Users coming to UserProfileActivity after successful registration
+    private void checkifEmailVerified(FirebaseUser firebaseUser) {
+        if (!firebaseUser.isEmailVerified()){
+            showAlertDialog();
+        }
+    }
+
     private void swipeToRefresh() {
         //Look up for the Swipe Container
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -108,12 +115,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
     }
 
-    //Users coming to UserProfileActivity after successful registration
-    private void checkifEmailVerified(FirebaseUser firebaseUser) {
-        if (!firebaseUser.isEmailVerified()){
-            showAlertDialog();
-        }
-    }
+
 
     private void showAlertDialog() {
         //Setup Alert builder

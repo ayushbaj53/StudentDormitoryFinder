@@ -1,10 +1,5 @@
 package com.example.studentdormitoryfinder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,13 +13,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.studentdormitoryfinder.ChangePasswordActivity;
-import com.example.studentdormitoryfinder.DeleteProfileActivity;
-import com.example.studentdormitoryfinder.MainActivity;
-import com.example.studentdormitoryfinder.R;
-import com.example.studentdormitoryfinder.UpdateEmailActivity;
-import com.example.studentdormitoryfinder.UpdateProfileActivity;
-import com.example.studentdormitoryfinder.UserProfileActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class UploadProfilePicActivity extends AppCompatActivity {
+public class UploadHostelPicActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private ImageView imageViewUploadPic;
@@ -50,27 +43,27 @@ public class UploadProfilePicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_profile_pic);
+        setContentView(R.layout.activity_upload_hostel_pic);
 
-        getSupportActionBar().setTitle("Upload Profile Picture");
+        getSupportActionBar().setTitle("Upload Hostel Picture");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button buttonUploadPicChoose = findViewById(R.id.upload_pic_choose_button);
         Button buttonUploadPic = findViewById(R.id.upload_pic_button);
         progressBar = findViewById(R.id.progressBar);
-        imageViewUploadPic = findViewById(R.id.imageView_profile_dp);
+        imageViewUploadPic = findViewById(R.id.imageView_hostel_dp);
 
 
         authProfile = FirebaseAuth.getInstance();
         firebaseUser = authProfile.getCurrentUser();
 
-        storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
+        storageReference = FirebaseStorage.getInstance().getReference("HostelPics");
 
         Uri uri = firebaseUser.getPhotoUrl();
 
         //Set User's current DP in ImageView (if uploaded already). We will Picasso since imageViewer setImage
         //Regular URIs
-        Picasso.with(UploadProfilePicActivity.this).load(uri).into(imageViewUploadPic);
+        Picasso.with(UploadHostelPicActivity.this).load(uri).into(imageViewUploadPic);
 
         //Choosing image to upload
         buttonUploadPicChoose.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +104,7 @@ public class UploadProfilePicActivity extends AppCompatActivity {
         if (uriImage != null){
 
             //Save the image with uid of the currently logged user
-            StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid() + "/displypic."
+            StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid() + "/hostel-pic."
                     + getFileExtension(uriImage));
 
             //Upload image to Storage
@@ -134,16 +127,16 @@ public class UploadProfilePicActivity extends AppCompatActivity {
                     });
 
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(UploadProfilePicActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadHostelPicActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(UploadProfilePicActivity.this, UserProfileActivity.class);
+                    Intent intent = new Intent(UploadHostelPicActivity.this, HostelUserProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UploadProfilePicActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadHostelPicActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }else {
@@ -173,42 +166,42 @@ public class UploadProfilePicActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(UploadProfilePicActivity.this);
+            NavUtils.navigateUpFromSameTask(UploadHostelPicActivity.this);
         } else if (id == R.id.menu_refresh){
             //Refresh Activity
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
         } else if (id == R.id.menu_update_profile){
-            Intent intent = new Intent(UploadProfilePicActivity.this, UpdateProfileActivity.class);
+            Intent intent = new Intent(UploadHostelPicActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.menu_update_email) {
-            Intent intent = new Intent(UploadProfilePicActivity.this, UpdateEmailActivity.class);
+            Intent intent = new Intent(UploadHostelPicActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.menu_profile){
-            Intent intent = new Intent(UploadProfilePicActivity.this, UserProfileActivity.class);
+            Intent intent = new Intent(UploadHostelPicActivity.this, UserProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_change_password) {
-            Intent intent = new Intent(UploadProfilePicActivity.this, ChangePasswordActivity.class);
+            Intent intent = new Intent(UploadHostelPicActivity.this, ChangePasswordActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.menu_delete_profile) {
-            Intent intent = new Intent(UploadProfilePicActivity.this, DeleteProfileActivity.class);
+            Intent intent = new Intent(UploadHostelPicActivity.this, DeleteProfileActivity.class);
             startActivity(intent);
             finish();
         }   else if (id == R.id.menu_logout) {
             authProfile.signOut();
-            Toast.makeText(UploadProfilePicActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(UploadProfilePicActivity.this, MainActivity.class);
+            Toast.makeText(UploadHostelPicActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(UploadHostelPicActivity.this, MainActivity.class);
 
             //Clear stack to prevent user coming back to UserProfileActivity on pressing back button after Logging out
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();  //Close UserProfileActivity
         } else {
-            Toast.makeText(UploadProfilePicActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadHostelPicActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

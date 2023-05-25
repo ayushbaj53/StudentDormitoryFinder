@@ -70,7 +70,7 @@ public class searchactivity extends AppCompatActivity {
     }
 
     private void performSearch(String query) {
-        Query searchQuery = databaseReference.orderByChild("location").startAt(query);
+        Query searchQuery = databaseReference.orderByChild("location").startAt(query).endAt(query+"\uf8ff");
         searchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -153,20 +153,20 @@ public class HostelLoginForm extends AppCompatActivity {
     }
 
     //Check if User is already logged in. In such case, straightaway take the User to the User's Profile
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (authProfile.getCurrentUser() != null) {
-//            Toast.makeText(HostelLoginForm.this, "Already Logged In", Toast.LENGTH_SHORT).show();
-//
-//            //Start the HostelUserProfileActivity
-//            startActivity(new Intent(HostelLoginForm.this, HostelUserProfileActivity.class));
-//            finish();       //Close LoginActivity
-//        }
-//        else {
-//            Toast.makeText(HostelLoginForm.this, "You can Login now", Toast.LENGTH_SHORT).show();
-//
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (authProfile.getCurrentUser() != null) {
+            Toast.makeText(HostelLoginForm.this, "Already Logged In", Toast.LENGTH_SHORT).show();
+
+            //Start the HostelUserProfileActivity
+            startActivity(new Intent(HostelLoginForm.this, HostelUserProfileActivity.class));
+            finish();       //Close LoginActivity
+        }
+        else {
+            Toast.makeText(HostelLoginForm.this, "You can Login now", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
     }
