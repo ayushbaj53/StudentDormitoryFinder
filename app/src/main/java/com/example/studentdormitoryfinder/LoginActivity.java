@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     editTextLoginEmail.requestFocus();
                 } else if (TextUtils.isEmpty(textPwd)) {
                     Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
-                    editTextLoginPwd.setError("Email is required");
+                    editTextLoginPwd.setError("Password is required");
                     editTextLoginPwd.requestFocus();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);

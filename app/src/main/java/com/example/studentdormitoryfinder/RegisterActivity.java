@@ -154,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editTextRegisterConfirmPwd.requestFocus();
                 }else if (!textPwd.equals(textConfirmPwd)) {
                     Toast.makeText(RegisterActivity.this, "Please confirm your password", Toast.LENGTH_LONG).show();
-                    editTextRegisterConfirmPwd.setError("Password Confirmation is required");
+                    editTextRegisterConfirmPwd.setError("Passwords Don't match");
                     editTextRegisterConfirmPwd.requestFocus();
                     //Clear the entered passwords
                     editTextRegisterPwd.clearComposingText();

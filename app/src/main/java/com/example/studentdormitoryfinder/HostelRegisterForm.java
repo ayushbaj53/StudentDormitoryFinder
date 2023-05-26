@@ -124,12 +124,12 @@ public class HostelRegisterForm extends AppCompatActivity {
 
                 }else if (TextUtils.isEmpty(textlocation)) {
                     Toast.makeText(HostelRegisterForm.this, "Please enter your location", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Email is required");
-                    editTextRegisterEmail.requestFocus();}
+                    editTextLocation.setError("Location is required");
+                    editTextLocation.requestFocus();}
                 else if (TextUtils.isEmpty(textprice)) {
                     Toast.makeText(HostelRegisterForm.this, "Please enter your price", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Email is required");
-                    editTextRegisterEmail.requestFocus();}
+                    editTextPrice.setError("Price is required");
+                    editTextPrice.requestFocus();}
                 else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
                     Toast.makeText(HostelRegisterForm.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
                     editTextRegisterEmail.setError("Valid email is required");
@@ -168,7 +168,7 @@ public class HostelRegisterForm extends AppCompatActivity {
                     editTextRegisterConfirmPwd.requestFocus();
                 } else if (!textPwd.equals(textConfirmPwd)) {
                     Toast.makeText(HostelRegisterForm.this, "Please confirm your password", Toast.LENGTH_LONG).show();
-                    editTextRegisterConfirmPwd.setError("Password Confirmation is required");
+                    editTextRegisterConfirmPwd.setError("Passwords don't match");
                     editTextRegisterConfirmPwd.requestFocus();
                     //Clear the entered passwords
                     editTextRegisterPwd.clearComposingText();
