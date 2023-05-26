@@ -202,9 +202,6 @@ public class HostelUserProfileActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile){
-            Intent intent = new Intent(HostelUserProfileActivity.this, UpdateProfileActivity.class);
-            startActivity(intent);
         } else if (id == R.id.menu_update_email) {
             Intent intent = new Intent(HostelUserProfileActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
