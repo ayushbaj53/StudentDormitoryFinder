@@ -217,7 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
 
 
-                            /*//Open User Profile after successful registration
+                            //Open User Profile after successful registration
                             Intent intent = new Intent(RegisterActivity.this, UserProfileActivity.class);
                             //To Prevent User from returning back to Register Activity on pressing back button after registration
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

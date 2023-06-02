@@ -88,6 +88,12 @@ public class HostelUserProfileActivity extends AppCompatActivity {
         }
     }
 
+    //Users coming to UserProfileActivity after successful registration
+    private void checkifEmailVerified(FirebaseUser firebaseUser) {
+        if (!firebaseUser.isEmailVerified()){
+            showAlertDialog();
+        }
+    }
 
 
     private void swipeToRefresh() {
@@ -111,12 +117,7 @@ public class HostelUserProfileActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
     }
 
-    //Users coming to UserProfileActivity after successful registration
-    private void checkifEmailVerified(FirebaseUser firebaseUser) {
-        if (!firebaseUser.isEmailVerified()){
-            showAlertDialog();
-        }
-    }
+
     private void showAlertDialog() {
         //Setup Alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(HostelUserProfileActivity.this);

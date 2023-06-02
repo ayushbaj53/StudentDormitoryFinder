@@ -79,7 +79,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
                 //Obtain password for authentication
                 userPwd = editTextPwd.getText().toString();
 
-                if (TextUtils.isEmpty(userPwd)){
+                if (TextUtils.isEmpty(userPwd)) {
                     Toast.makeText(UpdateEmailActivity.this, "Password is needed to continue", Toast.LENGTH_SHORT).show();
                     editTextPwd.setError("Please enter your password for authentication");
                     editTextPwd.requestFocus();
